@@ -34,7 +34,7 @@ function refresh() {
 
   ui.renderTypes(dataCards.countByType(state.cards), state.filters.type);
   ui.renderCount(visible.length);
-  ui.renderGrid(visible, state.cart);
+  ui.renderGrid(cards, state.cart);
   ui.renderCart(state.cart, state.cards, dataCart.cartTotal(state.cart, state.cards), dataCart.cartCount(state.cart));
   ui.renderStats(dataCards.getStats(visible));
 }
@@ -103,4 +103,5 @@ refresh();
 
 // ---------- Pour tester vos fonctions dans la console ----------
 // Exemple : dex.searchCards(dex.cards, "kit")   ou   dex.addToCart([], 1, dex.cards)
+
 window.dex = { cards, state, ...dataCards, ...dataCart };

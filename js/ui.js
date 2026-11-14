@@ -79,8 +79,22 @@ export function renderCount(n) {
  */
 export function renderGrid(list, cart) {
   // TODO 1. Videz #grid
+  grid.innerHTML=""
   // TODO 2. Liste vide : ajoutez le message et arrêtez (return)
+  
   // TODO 3. Pour chaque carte : créez l'article et ses enfants, puis grid.append(article)
+  cards.forEach(element => {
+    grid.insertAdjacentHTML("beforeend",`<article class="card" data-id="${element.id}">
+      <img class="card__img" src=${element.image} alt=${element.nom}>
+      <p class="card__num">${element.id}</p>
+      <h3 class="card__name">${element.nom}</h3>
+      <p class="card__meta"><span class="badge type-feu">${element.type}</span> <span class="rarity">${element.rarete}</span></p>
+      <p class="card__price">${element.prix} DH</p>
+      <button class="btn btn--primary" type="button" data-add="${element.id}">Ajouter</button>
+    </article>`
+    )
+    
+  });
 }
 
 /**
