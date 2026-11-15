@@ -5,6 +5,8 @@
 // (Pas de innerHTML avec des données : seulement innerHTML = "" pour vider une zone.)
 // =============================================================
 
+import { createElement } from "react";
+
 const typesBox = document.querySelector("#types");
 const grid = document.querySelector("#grid");
 const count = document.querySelector("#count");
@@ -50,8 +52,53 @@ export function el(tag, className = "", text = "") {
  */
 export function renderTypes(counts, activeType) {
   // TODO 1. Videz #types
+  typesBox.innerHTML="";
   // TODO 2. Créez le bouton « Tous (…) »
+  const tous = createElement("button")
+  tous.textContent= `Tous (${counts.Feu +counts.Eau +counts.Plante + counts.Électrik })`
+  tous.className= "type-btn"
+  tous.type = "button"
+  tous.dataset.type= "Tous"
   // TODO 3. Pour chaque type de counts (for...in ou Object.keys), créez un bouton
+  const feu = createElement("button")
+  feu.textContent= `Feu (${counts.Feu})`
+  feu.className= "type-btn"
+  feu.type = "button"
+  feu.dataset.type= "Feu"
+
+  const eau = createElement("button")
+  eau.textContent= `Eau(${counts.Eau})`
+  eau.className= "type-btn"
+  eau.type = "button"
+  eau.dataset.type= "Eau"
+
+  const plante= createElement("button")
+  plante.textContent= `Plante (${counts.Plante}) `
+  plante.className= "type-btn"
+  plante.type = "button"
+  feu.dataset.type= "Plante"
+
+  const electrik = createElement("button")
+  electrik.textContent= `Électrik (${counts.Électrik})`
+  electrik.className= "type-btn"
+  electrik.type = "button"
+  electrik.dataset.type= "Électrik"
+
+  if(activeType === "Tous"){
+    tous.classList.add="is-active"
+  }
+  if(activeType === "Feu"){
+    feu.classList.add="is-active"
+  }
+  if(activeType === "Eau"){
+    eau.classList.add="is-active"
+  }
+  if(activeType === "electrik"){
+    electrik.classList.add="is-active"
+  }
+  if(activeType === "Plante"){
+    plante.classList.add="is-active"
+  }
 }
 
 /**
@@ -81,19 +128,62 @@ export function renderGrid(list, cart) {
   // TODO 1. Videz #grid
   grid.innerHTML=""
   // TODO 2. Liste vide : ajoutez le message et arrêtez (return)
+  if(list.lenght===0){
+    return "les cartes indisponible";
+  }
   
   // TODO 3. Pour chaque carte : créez l'article et ses enfants, puis grid.append(article)
   cards.forEach(element => {
-    grid.insertAdjacentHTML("beforeend",`<article class="card" data-id="${element.id}">
-      <img class="card__img" src=${element.image} alt=${element.nom}>
-      <p class="card__num">${element.id}</p>
-      <h3 class="card__name">${element.nom}</h3>
-      <p class="card__meta"><span class="badge type-feu">${element.type}</span> <span class="rarity">${element.rarete}</span></p>
-      <p class="card__price">${element.prix} DH</p>
-      <button class="btn btn--primary" type="button" data-add="${element.id}">Ajouter</button>
-    </article>`
-    )
-    
+  //   grid.insertAdjacentHTML("beforeend",`<article class="card" data-id="${element.id}">
+  //     <img class="card__img" src=${element.image} alt=${element.nom}>
+  //     <p class="card__num">${element.id}</p>
+  //     <h3 class="card__name">${element.nom}</h3>
+  //     <p class="card__meta"><span class="badge type-feu">${element.type}</span> <span class="rarity">${element.rarete}</span></p>
+  //     <p class="card__price">${element.prix} DH</p>
+  //     <button class="btn btn--primary" type="button" data-add="${element.id}">Ajouter</button>
+  //   </article>`
+  //   )
+    const article = createElement("article")
+    article.className= "card"
+    article.dataset.id= element.id;
+
+    const image = createElement("img")
+    image.className="card__img"
+    image.src = element.image
+    image.alt = element.nom;
+
+    const p1 = createElement("p")
+    p1.className="card_num"
+    p1.textContent = element.id
+
+    const H3 = createElement("h3")
+    H3.className= "card_name";
+
+    const p2 = createElement("p")
+    p2.className="card_meta"
+
+    const span1 = createElement("span")
+     span1.className="badge type-feu" 
+     span1.textContent = element.type;
+     const span2 = createElement("span")
+     span2.className="rarity"
+     span2.textContent = element.rarete ;
+
+            p2.appendChild(span1,span2)
+
+    const p3 = createElement("p")
+    p3.className="card_price"
+    p3.textContent = element.prix;
+
+    const button = createElement("button")
+    button.className= "btn"
+    button.classList.add = "btn--primary"
+    button.type= button
+    button.dataset.add = element.id
+    button.textContent= ajouter
+
+    article.appendChild(image,p1,p2,p3,button);
+
   });
 }
 
