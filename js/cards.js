@@ -21,10 +21,11 @@ export function searchCards(cards, term) {
   const inputsearch = term.trim().toLowerCase();
   // TODO 2. Si le terme est vide, renvoyez une copie de cards
   if(inputsearch===""){
-    return cards;
+    return [...cards];
   }
+
   // TODO 3. Sinon, renvoyez cards.filter(...) : le nom en minuscules contient-il le terme ?
-  const datafiltred = cards.filter(cart => cart.nom.include(inputsearch) )
+  const datafiltred = cards.filter(cart => cart.nom.toLowerCase().includes(inputsearch) )
   
   return datafiltred ;
 }
@@ -35,7 +36,13 @@ export function searchCards(cards, term) {
  */
 export function filterByType(cards, type) {
   // TODO
+  if(type==="Tous"){
+    return [...cards];
+  }
   const datatype = cards.filter(element => element.type === type ) 
+  
+
+  
   return datatype;
 }
 
@@ -61,9 +68,7 @@ export function countByType(cards) {
   const counts={};
   // TODO 2. Pour chaque carte : si counts[carte.type] n'existe pas, mettez 0, puis ajoutez 1
   cards.forEach(element => { 
-    //    if(!element.type in counts ){
-    //   counts[element.type]= 0
-    // }  
+  
     counts[element.type] ??= 0
     counts[element.type]+=1;
     

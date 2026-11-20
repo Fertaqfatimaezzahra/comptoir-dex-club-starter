@@ -5,7 +5,8 @@
 // (Pas de innerHTML avec des données : seulement innerHTML = "" pour vider une zone.)
 // =============================================================
 
-import { createElement } from "react";
+// import { createElement } from "react";
+
 
 const typesBox = document.querySelector("#types");
 const grid = document.querySelector("#grid");
@@ -85,19 +86,19 @@ export function renderTypes(counts, activeType) {
   electrik.dataset.type= "Électrik"
 
   if(activeType === "Tous"){
-    tous.classList.add="is-active"
+    tous.classList.add("is-active")
   }
   if(activeType === "Feu"){
-    feu.classList.add="is-active"
+    feu.classList.add("is-active")
   }
   if(activeType === "Eau"){
-    eau.classList.add="is-active"
+    eau.classList.add("is-active")
   }
   if(activeType === "electrik"){
-    electrik.classList.add="is-active"
+    electrik.classList.add("is-active")
   }
   if(activeType === "Plante"){
-    plante.classList.add="is-active"
+    plante.classList.add("is-active")
   }
 }
 
@@ -105,6 +106,11 @@ export function renderTypes(counts, activeType) {
  * Affiche le nombre de cartes visibles dans #count : "5 cartes", "1 carte" ou "Aucune carte".
  */
 export function renderCount(n) {
+    
+
+
+
+
   // TODO
 }
 
@@ -128,21 +134,16 @@ export function renderGrid(list, cart) {
   // TODO 1. Videz #grid
   grid.innerHTML=""
   // TODO 2. Liste vide : ajoutez le message et arrêtez (return)
-  if(list.lenght===0){
-    return "les cartes indisponible";
+  if(list.length===0){
+    grid.innerHTML= "<p class='empty'> les cartes indisponible</p>"
+    return;
+
   }
   
+
   // TODO 3. Pour chaque carte : créez l'article et ses enfants, puis grid.append(article)
-  cards.forEach(element => {
-  //   grid.insertAdjacentHTML("beforeend",`<article class="card" data-id="${element.id}">
-  //     <img class="card__img" src=${element.image} alt=${element.nom}>
-  //     <p class="card__num">${element.id}</p>
-  //     <h3 class="card__name">${element.nom}</h3>
-  //     <p class="card__meta"><span class="badge type-feu">${element.type}</span> <span class="rarity">${element.rarete}</span></p>
-  //     <p class="card__price">${element.prix} DH</p>
-  //     <button class="btn btn--primary" type="button" data-add="${element.id}">Ajouter</button>
-  //   </article>`
-  //   )
+  list.forEach(element => {
+    
     const article = createElement("article")
     article.className= "card"
     article.dataset.id= element.id;
@@ -153,36 +154,43 @@ export function renderGrid(list, cart) {
     image.alt = element.nom;
 
     const p1 = createElement("p")
-    p1.className="card_num"
-    p1.textContent = element.id
+    p1.className="card__num"
+    p1.textContent = typeClass(element.id)
 
     const H3 = createElement("h3")
-    H3.className= "card_name";
+    H3.className= "card__name";
+    H3.textContent = element.nom;
+
 
     const p2 = createElement("p")
-    p2.className="card_meta"
+    p2.className="card__meta"
 
     const span1 = createElement("span")
-     span1.className="badge type-feu" 
+     span1.className=`badge ${typeClass(element.type)}`
      span1.textContent = element.type;
      const span2 = createElement("span")
      span2.className="rarity"
      span2.textContent = element.rarete ;
 
-            p2.appendChild(span1,span2)
+            p2.append(span1,span2)
 
     const p3 = createElement("p")
-    p3.className="card_price"
-    p3.textContent = element.prix;
+    p3.className="card__price"
+    p3.textContent =formatPrix ( element.prix);
 
     const button = createElement("button")
     button.className= "btn"
-    button.classList.add = "btn--primary"
-    button.type= button
+    button.classList.add( "btn--primary")
+    button.type= "button"
     button.dataset.add = element.id
-    button.textContent= ajouter
+    button.textContent= "ajouter"
+    if(element.stock===0){
+      button.disabled =true;
+      article.classList.add("out-of-stock");
+    }
 
-    article.appendChild(image,p1,p2,p3,button);
+    article.append(image,p1,H3,p2,p3,button);
+    grid.append(article)
 
   });
 }
@@ -193,6 +201,7 @@ export function renderGrid(list, cart) {
  */
 export function renderDetail(card) {
   // TODO
+
 }
 
 // -------------------------------------------------------------
